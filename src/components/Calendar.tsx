@@ -3,10 +3,14 @@ import dayjs from 'dayjs'
 
 export default function Calendar() {
   const today = dayjs()
-  const [currentMonth, setCurrentMonth] = useState(today)
+
   const [days, setDays] = useState<any[]>([])
-  const [selected, setSelected] = useState(today)
+  const [currentMonth, setCurrentMonth] = useState(today)
+  const [selectedDay, setSelectedDay] = useState(today)
+
   const [showPicker, setShowPicker] = useState(false)
+  const [years, setYears] = useState<any[]>([])
+  const [currentYear, setCurrentYear] = useState(today)
 
   const Title = () => (
     <div className='my-6 text-3xl font-bold'>
@@ -18,18 +22,22 @@ export default function Calendar() {
     <div className='flex flex-row justify-between items-center text-sm cursor-pointer'>
       <div
         onClick={() =>
-          setCurrentMonth((current) => current.subtract(1, 'month'))
+          showPicker
+            ? setCurrentYear((current) => current.subtract(20, 'year'))
+            : setCurrentMonth((current) => current.subtract(1, 'month'))
         }
       >
         {leftArrow}
       </div>
-      <div onClick={() => setShowPicker((show) => !show)}>
-        {showPicker
-          ? currentMonth.format('YYYY')
-          : currentMonth.format('MMMM YYYY')}
+      <div onClick={() => setShowPicker(true)}>
+        {showPicker ? today.format('YYYY') : currentMonth.format('MMMM YYYY')}
       </div>
       <div
-        onClick={() => setCurrentMonth((current) => current.add(1, 'month'))}
+        onClick={() =>
+          showPicker
+            ? setCurrentYear((current) => current.add(20, 'year'))
+            : setCurrentMonth((current) => current.add(1, 'month'))
+        }
       >
         {rightArrow}
       </div>
@@ -65,7 +73,7 @@ export default function Calendar() {
                     ? 'bg-primary'
                     : 'hover:bg-white hover:text-black'
                 }`}
-              onClick={() => updateSelected(day)}
+              onClick={() => updateSelectedDay(day)}
             >
               {day.day}
             </div>
@@ -82,14 +90,42 @@ export default function Calendar() {
     </div>
   )
 
-  const Picker = () => <div>Picker</div>
+  const Picker = () => (
+    <div className='cursor-pointer'>
+      {years.map((row, index) => (
+        <div key={index} className='flex flex-row justify-between my-3'>
+          {row.map((col: any) => (
+            <div
+              key={col.year}
+              className={`h-6 w-[61px] flex flex-col justify-center items-center rounded-sm
+                ${
+                  col.isSelected
+                    ? 'bg-primary'
+                    : 'hover:bg-white hover:text-black'
+                }`}
+              onClick={() => {
+                setCurrentMonth(dayjs().set('year', col.year).startOf('year'))
+                setShowPicker(false)
+              }}
+            >
+              {col.year}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  )
 
-  const updateSelected = (day: any) => {
-    setSelected(day)
+  const updateSelectedDay = (day: any) => {
+    setSelectedDay(day)
     setDays((days) =>
       days.map((week) =>
         week.map((d: any) => {
-          if (d.day === day.day && d.month === day.month) {
+          if (
+            d.day === day.day &&
+            d.month === day.month &&
+            d.year === day.year
+          ) {
             d.isSelected = true
           } else {
             d.isSelected = false
@@ -104,7 +140,7 @@ export default function Calendar() {
     let currentDay = currentMonth.startOf('month').day(0)
     const nextMonth = currentMonth.add(1, 'month').month()
 
-    let allDays = []
+    let arrayOfDays = []
     let weekDays = []
 
     let weekCounter = 1
@@ -119,7 +155,7 @@ export default function Calendar() {
       })
 
       if (weekCounter === 7) {
-        allDays.push(weekDays)
+        arrayOfDays.push(weekDays)
         weekDays = []
         weekCounter = 0
       }
@@ -128,9 +164,30 @@ export default function Calendar() {
       currentDay = currentDay.add(1, 'day')
     }
 
-    setDays(allDays)
-    if (days.length !== 0) updateSelected(selected)
+    setDays(arrayOfDays)
+    if (days.length !== 0) updateSelectedDay(selectedDay)
   }
+
+  const calculateYears = () => {
+    let start = Math.floor(currentYear.year() / 10) * 10 + 1
+    const arrayOfYear = Array.from(Array(5), () => new Array(4))
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 4; j++) {
+        const y = start++
+        arrayOfYear[i][j] = {
+          year: y,
+          isCurrentYear: currentYear.year() === y,
+          isSelected: currentYear.year() === y,
+        }
+      }
+    }
+
+    setYears(arrayOfYear)
+  }
+
+  useEffect(() => {
+    calculateYears()
+  }, [currentYear])
 
   useEffect(() => {
     calculateDays()
