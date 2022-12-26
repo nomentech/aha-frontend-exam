@@ -1,6 +1,13 @@
 import { useCallback, useState } from 'react'
 
-export default function Password() {
+export default function Password({
+  label = 'Password',
+  placeholder = 'Password',
+  showOption = true,
+  type = 'password',
+  value,
+  onFocus,
+}: any) {
   const [options, setOptions] = useState([
     {
       check: false,
@@ -61,26 +68,30 @@ export default function Password() {
     <div className='w-80 text-white'>
       <div>
         <div className='relative top-2 left-3 px-1 text-xs w-fit bg-customblack '>
-          Password
+          {label}
         </div>
         <input
           className='px-2 h-14 rounded-lg w-full
                       bg-customblack border-[3px] border-customgray  
                       hover:border-white focus:outline-none focus:border-primary'
-          type='password'
-          placeholder='Password'
+          type={type}
+          placeholder={placeholder}
           onChange={changeHandler}
+          value={value}
+          onFocus={onFocus}
         />
       </div>
-      <div className='h-[226px] py-4 mt-4 flex flex-col justify-between rounded-lg bg-[#242424]'>
-        {options.map((option, index) => (
-          <MenuOption
-            key={index}
-            check={option.check}
-            content={option.content}
-          />
-        ))}
-      </div>
+      {showOption && (
+        <div className='h-[226px] py-4 mt-4 flex flex-col justify-between rounded-lg bg-[#242424]'>
+          {options.map((option, index) => (
+            <MenuOption
+              key={index}
+              check={option.check}
+              content={option.content}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

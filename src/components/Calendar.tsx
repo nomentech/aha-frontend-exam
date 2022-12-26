@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 
-export default function Calendar() {
+export default function Calendar({ submit }: any) {
   const today = dayjs()
 
   const [days, setDays] = useState<any[]>([])
@@ -86,7 +86,12 @@ export default function Calendar() {
   const Footer = () => (
     <div className='m-6 flex flex-row justify-end items-center text-sm font-semibold cursor-pointer'>
       <div>Cancel</div>
-      <div className='ml-16'>OK</div>
+      <div
+        className='ml-16'
+        onClick={() => submit(selectedDay.format('MM/DD/YYYY'))}
+      >
+        OK
+      </div>
     </div>
   )
 
@@ -117,7 +122,7 @@ export default function Calendar() {
   )
 
   const updateSelectedDay = (day: any) => {
-    setSelectedDay(day)
+    setSelectedDay(dayjs(new Date(day.year, day.month, day.day)))
     setDays((days) =>
       days.map((week) =>
         week.map((d: any) => {

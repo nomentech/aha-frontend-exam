@@ -1,12 +1,13 @@
+import Advanced from './components/Advanced'
 import Calendar from './components/Calendar'
-// import Password from './components/Password'
+import Password from './components/Password'
 
 function App() {
   return (
-    <div className='flex'>
-      <div className='mx-auto mt-40'>
-        <Calendar />
-      </div>
+    <div className='flex flex-row justify-around mt-40'>
+      <Password />
+      <Calendar />
+      <Advanced />
     </div>
   )
 }
