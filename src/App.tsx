@@ -1,15 +1,7 @@
-import Advanced from './components/Advanced'
-import Calendar from './components/Calendar'
-import Password from './components/Password'
+import Exam2 from './Exam2'
 
 function App() {
-  return (
-    <div className='flex flex-row justify-around mt-40'>
-      <Password />
-      <Calendar />
-      <Advanced />
-    </div>
-  )
+  return <Exam2 />
 }
 
 export default App

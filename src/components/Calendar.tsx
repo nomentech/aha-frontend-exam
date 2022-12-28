@@ -192,11 +192,11 @@ export default function Calendar({ submit }: any) {
 
   useEffect(() => {
     calculateYears()
-  }, [currentYear])
+  }, [currentYear, calculateYears])
 
   useEffect(() => {
     calculateDays()
-  }, [currentMonth])
+  }, [currentMonth, calculateDays])
 
   return (
     <div className='h-[469px] w-[320px] px-6 py-5 rounded-lg bg-[#1B1B1B] text-white'>
