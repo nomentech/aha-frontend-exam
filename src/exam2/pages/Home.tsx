@@ -1,9 +1,9 @@
-import Content from './exam2/Content'
-import Logo from './exam2/Logo'
-import Menu from './exam2/Menu'
-import Profile from './exam2/Profile'
+import Content from '../components/Content'
+import Logo from '../components/Logo'
+import Menu from '../components/Menu'
+import Profile from '../components/Profile'
 
-export default function Exam2() {
+export default function Home() {
   return (
     <div>
       <div>

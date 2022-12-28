@@ -7,6 +7,7 @@ const Item = () => (
       <img
         className='rounded'
         src='https://www.w3schools.com/howto/img_avatar.png'
+        alt=''
         width={40}
         height={40}
       />
