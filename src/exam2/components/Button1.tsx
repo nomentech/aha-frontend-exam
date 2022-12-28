@@ -1,4 +1,4 @@
-export default function Button({ label }: any) {
+export default function Button1({ label }: any) {
   return (
     <div
       className='h-[40px] text-sm font-bold rounded-[4px] cursor-pointer 

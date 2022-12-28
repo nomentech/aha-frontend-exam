@@ -1,29 +1,27 @@
-import Content from '../components/Content'
-import Logo from '../components/Logo'
-import Menu from '../components/Menu'
-import Profile from '../components/Profile'
+import Layout from '../components/Layout'
+import Button1 from '../components/Button1'
+import Divider from '../components/Divider'
+import Input from '../components/Input'
+import Range from '../components/Range'
 
 export default function Home() {
   return (
-    <div>
-      <div>
-        <div className='h-[70px] flex flex-col justify-center px-5 sm:hidden'>
-          <Logo />
+    <Layout isHome={true}>
+      <div className='flex flex-col w-full px-5 sm:px-36 sm:py-[54px] space-y-6'>
+        <div className='text-2xl'>Search</div>
+        <Input />
+        <Divider />
+        <div className='text-2xl'># Of Results Per Page</div>
+        <div className='space-x-2'>
+          <span className='text-5xl font-bold'>30</span>
+          <span>results</span>
         </div>
-        <div className='flex flex-row'>
-          <div className='hidden sm:flex sm:flex-col p-5 sm:items-center space-y-10'>
-            <Logo />
-            <Menu direction='col' />
-          </div>
-          <Content />
-          <div className='hidden min-[1440px]:block'>
-            <Profile />
-          </div>
-        </div>
+        <Range />
+        <div className='h-2'></div>
+        <Divider />
+        <div className='h-[200px]'></div>
+        <Button1 label='Search' />
       </div>
-      <div className='h-[66px] w-full flex flex-col justify-center items-center absolute bottom-0 bg-[#181818]/20 sm:hidden'>
-        <Menu direction='row' />
-      </div>
-    </div>
+    </Layout>
   )
 }
