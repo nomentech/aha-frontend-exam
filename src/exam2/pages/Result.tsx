@@ -1,8 +1,27 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
+import getResults from '../api/getResults'
 import Button1 from '../components/Button1'
 import Layout from '../components/Layout'
+import Loading from '../components/Loading'
 
 export default function Result() {
+  const [searchParams] = useSearchParams()
+  const [page, setPage] = useState(1)
+  const pageSize = searchParams.get('pageSize')
+  const keyword = searchParams.get('keyword')
+
+  const [results, setResults] = useState<any[]>()
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      const r = await getResults({ page, pageSize, keyword })
+      setResults((prev) => (prev ? [...prev, ...r] : r))
+    }
+
+    fetchResults()
+  }, [page])
+
   return (
     <Layout isHome={false}>
       <div className='flex flex-col w-full px-5 sm:px-36 sm:py-[54px]'>
@@ -14,18 +33,21 @@ export default function Result() {
         </div>
         <div className='text-2xl sm:-mt-[51px]'>Results</div>
         <div className='grid grid-cols-1 sm:grid-cols-3 gap-8 my-8'>
-          {Array.from({ length: 9 }).map((_, index): any => (
-            <div key={index}>
-              <img
-                src='https://via.placeholder.com/1080x720/eee?text=3:2'
-                alt=''
-              />
-              <div className='text-sm mt-5'>This is a title</div>
-              <div className='text-xs text-[#B2B2B2]'>by username</div>
-            </div>
-          ))}
+          {!results ? (
+            <Loading />
+          ) : (
+            results.map((result: any, index: number) => (
+              <div key={index}>
+                <img src={result.avater} alt='' />
+                <div className='text-sm mt-5'>{result.name}</div>
+                <div className='text-xs text-[#B2B2B2]'>
+                  by {result.username}
+                </div>
+              </div>
+            ))
+          )}
         </div>
-        <Button1 label='MORE' />
+        <Button1 label='MORE' onClick={() => setPage((page) => page + 1)} />
       </div>
     </Layout>
   )

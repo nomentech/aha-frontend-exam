@@ -1,26 +1,34 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import getUsers from '../api/getUsers'
 import Button2 from './Button2'
+import Loading from './Loading'
 
-const Item = () => (
+const User = ({ user }: any) => (
   <div className='flex flex-row justify-between mb-4'>
     <div className='flex flex-row'>
       <img
         className='rounded'
-        src='https://www.w3schools.com/howto/img_avatar.png'
+        src={user.avater}
         alt=''
         width={40}
         height={40}
       />
       <div className='ml-4'>
-        <div className='text-sm'>Fullname</div>
-        <div className='text-xs text-[#929292]'>@username</div>
+        <div className='text-sm'>{user.name}</div>
+        <div className='text-xs text-[#929292]'>@{user.username}</div>
       </div>
     </div>
-    <Button2 label='Follow' outlined />
+    {user.isFollowing ? (
+      <Button2 label='Following' />
+    ) : (
+      <Button2 label='Follow' outlined />
+    )}
   </div>
 )
 
 export default function Profile() {
+  const [users, setUsers] = useState<any>()
+
   const [activeTab, setActiveTab] = useState('Followers')
 
   const Tab = ({ title }: any) => (
@@ -34,17 +42,36 @@ export default function Profile() {
     </div>
   )
 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const u = await getUsers()
+      setUsers(u)
+    }
+
+    fetchUsers()
+  }, [])
+
   return (
     <div className='w-[375px] pt-8'>
       <div className='flex flex-row cursor-pointer'>
         <Tab title='Followers' />
         <Tab title='Following' />
       </div>
-      <div className='px-4 pt-8'>
-        {Array.from({ length: 10 }).map((_, index) => (
-          <Item key={index} />
-        ))}
-      </div>
+      {!users ? (
+        <Loading />
+      ) : activeTab === 'Followers' ? (
+        <div className='px-4 pt-8'>
+          {users.followers.map((user: any) => (
+            <User user={user} key={user.id} />
+          ))}
+        </div>
+      ) : (
+        <div className='px-4 pt-8'>
+          {users.following.map((user: any) => (
+            <User user={user} key={user.id} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

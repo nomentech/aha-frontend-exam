@@ -1,7 +1,7 @@
 export default function Button2({ label, outlined = false }: any) {
   return (
     <div
-      className={`w-[60px] h-[29px] text-xs font-semibold rounded-[20px] cursor-pointer 
+      className={`px-2 w-fit h-[29px] text-xs font-semibold rounded-[20px] cursor-pointer 
                   flex flex-col justify-center items-center 
       ${
         outlined
