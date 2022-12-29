@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Button1 from '../components/Button1'
 import Layout from '../components/Layout'
 
@@ -6,7 +7,9 @@ export default function Tag() {
     <Layout isHome={false}>
       <div className='flex flex-col w-full px-5 sm:px-36 sm:py-[54px]'>
         <div className='h-[70px] flex flex-row space-x-4 items-center'>
-          <div className='sm:-ml-10'>{leftArrow}</div>
+          <Link to='/exam2'>
+            <div className='sm:-ml-10'>{leftArrow}</div>
+          </Link>
           <span className='text-2xl sm:hidden'>Home Page</span>
         </div>
         <div className='text-2xl sm:-mt-[51px]'>Tags</div>

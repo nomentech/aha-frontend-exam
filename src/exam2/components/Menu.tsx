@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export default function Menu({ direction }: any) {
   return (
     <div
@@ -5,8 +7,12 @@ export default function Menu({ direction }: any) {
         direction === 'row' ? 'space-x-10' : 'space-y-5'
       }`}
     >
-      <Icon color='white' />
-      <Icon color='#8A8A8F' />
+      <Link to='/exam2'>
+        <Icon color='white' />
+      </Link>
+      <Link to='/exam2/tag'>
+        <Icon color='#8A8A8F' />
+      </Link>
     </div>
   )
 }

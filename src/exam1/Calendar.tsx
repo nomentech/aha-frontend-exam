@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 
 export default function Calendar({ submit }: any) {
@@ -141,7 +141,7 @@ export default function Calendar({ submit }: any) {
     )
   }
 
-  const calculateDays = () => {
+  const calculateDays = useCallback(() => {
     let currentDay = currentMonth.startOf('month').day(0)
     const nextMonth = currentMonth.add(1, 'month').month()
 
@@ -171,9 +171,9 @@ export default function Calendar({ submit }: any) {
 
     setDays(arrayOfDays)
     if (days.length !== 0) updateSelectedDay(selectedDay)
-  }
+  }, [currentMonth])
 
-  const calculateYears = () => {
+  const calculateYears = useCallback(() => {
     let start = Math.floor(currentYear.year() / 10) * 10 + 1
     const arrayOfYear = Array.from(Array(5), () => new Array(4))
     for (let i = 0; i < 5; i++) {
@@ -188,7 +188,7 @@ export default function Calendar({ submit }: any) {
     }
 
     setYears(arrayOfYear)
-  }
+  }, [currentYear])
 
   useEffect(() => {
     calculateYears()

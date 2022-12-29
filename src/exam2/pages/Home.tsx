@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Layout from '../components/Layout'
 import Button1 from '../components/Button1'
 import Divider from '../components/Divider'
@@ -20,7 +21,9 @@ export default function Home() {
         <div className='h-2'></div>
         <Divider />
         <div className='h-[200px]'></div>
-        <Button1 label='Search' />
+        <Link to='/exam2/result'>
+          <Button1 label='Search' />
+        </Link>
       </div>
     </Layout>
   )
