@@ -19,7 +19,7 @@ export default function Calendar({ submit }: any) {
   )
 
   const Header = () => (
-    <div className='flex flex-row justify-between items-center text-sm cursor-pointer'>
+    <div className='flex flex-row justify-between items-center cursor-pointer'>
       <div
         onClick={() =>
           showPicker
@@ -46,7 +46,7 @@ export default function Calendar({ submit }: any) {
 
   const Weekdays = () => (
     // Array.from(Array(7).keys()) generates [0, ..., 6]
-    <div className='flex flex-row justify-between my-2 text-xs text-[#929292]'>
+    <div className='flex flex-row justify-between mt-3 mb-0.5 text-xs text-[#929292]'>
       {Array.from(Array(7).keys()).map((d: number) => (
         <div
           key={d}
@@ -98,11 +98,11 @@ export default function Calendar({ submit }: any) {
   const Picker = () => (
     <div className='cursor-pointer'>
       {years.map((row, index) => (
-        <div key={index} className='flex flex-row justify-between my-3'>
+        <div key={index} className='flex flex-row justify-between my-7'>
           {row.map((col: any) => (
             <div
               key={col.year}
-              className={`h-6 w-[61px] flex flex-col justify-center items-center rounded-sm
+              className={`h-6 w-[60px] flex flex-col justify-center items-center rounded-sm
                 ${
                   col.isSelected
                     ? 'bg-primary'
@@ -199,7 +199,7 @@ export default function Calendar({ submit }: any) {
   }, [currentMonth, calculateDays])
 
   return (
-    <div className='h-[469px] w-[320px] px-6 py-5 rounded-lg bg-[#1B1B1B] text-white'>
+    <div className='h-[469px] w-[320px] px-5 py-7 rounded-lg bg-[#1B1B1B] text-white'>
       <Title />
       <Header />
       {!showPicker && <Weekdays />}

@@ -50,7 +50,7 @@ export default function Password({
 
   const MenuOption = ({ check, content }: any) => (
     <div className='flex flex-row items-center'>
-      <div className='w-6 h-6 mx-2'>{check ? checkSolid : checkOutline}</div>
+      <div className='w-6 h-6 mx-3'>{check ? checkSolid : checkOutline}</div>
       <span className='text-sm'>{content}</span>
     </div>
   )
@@ -65,7 +65,7 @@ export default function Password({
   }
 
   return (
-    <div className='w-80 text-white'>
+    <div className='w-[335px] text-white'>
       <div>
         <div className='relative top-2 left-3 px-1 text-xs w-fit bg-customblack '>
           {label}
@@ -82,7 +82,7 @@ export default function Password({
         />
       </div>
       {showOption && (
-        <div className='h-[226px] py-4 mt-4 flex flex-col justify-between rounded-lg bg-[#242424]'>
+        <div className='h-[226px] py-4 mt-5 flex flex-col justify-between rounded-lg bg-[#242424]'>
           {options.map((option, index) => (
             <MenuOption
               key={index}
