@@ -1,15 +1,29 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 
-export default function Calendar({ submit }: any) {
+interface Day {
+  day: number
+  month: number
+  year: number
+  isCurrentMonth: boolean
+  isToday: boolean
+  isSelected: boolean
+}
+
+interface Year {
+  year: number
+  isSelected: boolean
+}
+
+export default function Calendar({ submit = () => {} }: any) {
   const today = dayjs()
 
-  const [days, setDays] = useState<any[]>([])
+  const [days, setDays] = useState<Day[][]>([])
   const [currentMonth, setCurrentMonth] = useState(today)
   const [selectedDay, setSelectedDay] = useState(today)
 
   const [showPicker, setShowPicker] = useState(false)
-  const [years, setYears] = useState<any[]>([])
+  const [years, setYears] = useState<Year[][]>([])
   const [currentYear, setCurrentYear] = useState(today)
 
   const Title = () => (
@@ -62,7 +76,7 @@ export default function Calendar({ submit }: any) {
     <div className='text-sm cursor-pointer'>
       {days.map((week, index) => (
         <div key={index} className='flex flex-row justify-between'>
-          {week.map((day: any) => (
+          {week.map((day: Day) => (
             <div
               key={day.day}
               className={`w-9 h-9 flex flex-col justify-center items-center rounded-full 
@@ -99,7 +113,7 @@ export default function Calendar({ submit }: any) {
     <div className='cursor-pointer'>
       {years.map((row, index) => (
         <div key={index} className='flex flex-row justify-between my-7'>
-          {row.map((col: any) => (
+          {row.map((col: Year) => (
             <div
               key={col.year}
               className={`h-6 w-[60px] flex flex-col justify-center items-center rounded-sm
@@ -121,11 +135,11 @@ export default function Calendar({ submit }: any) {
     </div>
   )
 
-  const updateSelectedDay = (day: any) => {
+  const updateSelectedDay = (day: Day) => {
     setSelectedDay(dayjs(new Date(day.year, day.month, day.day)))
     setDays((days) =>
       days.map((week) =>
-        week.map((d: any) => {
+        week.map((d: Day) => {
           if (
             d.day === day.day &&
             d.month === day.month &&
@@ -141,12 +155,12 @@ export default function Calendar({ submit }: any) {
     )
   }
 
-  const calculateDays = useCallback(() => {
+  const calculateDays = () => {
     let currentDay = currentMonth.startOf('month').day(0)
     const nextMonth = currentMonth.add(1, 'month').month()
 
     let arrayOfDays = []
-    let weekDays = []
+    let weekDays: Day[] = []
 
     let weekCounter = 1
     while (currentDay.day(0).month() !== nextMonth) {
@@ -156,7 +170,7 @@ export default function Calendar({ submit }: any) {
         year: currentDay.year(),
         isCurrentMonth: currentDay.month() === currentMonth.month(),
         isToday: currentDay.isSame(today, 'day'),
-        isSelected: currentDay.isSame(today, 'day'),
+        isSelected: currentDay.isSame(selectedDay, 'day'),
       })
 
       if (weekCounter === 7) {
@@ -170,10 +184,9 @@ export default function Calendar({ submit }: any) {
     }
 
     setDays(arrayOfDays)
-    if (days.length !== 0) updateSelectedDay(selectedDay)
-  }, [currentMonth])
+  }
 
-  const calculateYears = useCallback(() => {
+  const calculateYears = () => {
     let start = Math.floor(currentYear.year() / 10) * 10 + 1
     const arrayOfYear = Array.from(Array(5), () => new Array(4))
     for (let i = 0; i < 5; i++) {
@@ -181,22 +194,21 @@ export default function Calendar({ submit }: any) {
         const y = start++
         arrayOfYear[i][j] = {
           year: y,
-          isCurrentYear: currentYear.year() === y,
           isSelected: currentYear.year() === y,
         }
       }
     }
 
     setYears(arrayOfYear)
-  }, [currentYear])
+  }
 
   useEffect(() => {
     calculateYears()
-  }, [currentYear, calculateYears])
+  }, [currentYear])
 
   useEffect(() => {
     calculateDays()
-  }, [currentMonth, calculateDays])
+  }, [currentMonth])
 
   return (
     <div className='h-[469px] w-[320px] px-5 py-7 rounded-lg bg-[#1B1B1B] text-white'>

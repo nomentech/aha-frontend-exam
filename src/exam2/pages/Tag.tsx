@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import getTags from '../api/getTags'
-import Button1 from '../components/Button1'
 import Layout from '../components/Layout'
 import Loading from '../components/Loading'
 
