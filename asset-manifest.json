@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/aha-frontend-exam/static/css/main.b5daa47e.css",
-    "main.js": "/aha-frontend-exam/static/js/main.7164c288.js",
+    "main.js": "/aha-frontend-exam/static/js/main.64dba9c0.js",
     "static/js/787.fda98803.chunk.js": "/aha-frontend-exam/static/js/787.fda98803.chunk.js",
     "index.html": "/aha-frontend-exam/index.html",
     "main.b5daa47e.css.map": "/aha-frontend-exam/static/css/main.b5daa47e.css.map",
-    "main.7164c288.js.map": "/aha-frontend-exam/static/js/main.7164c288.js.map",
+    "main.64dba9c0.js.map": "/aha-frontend-exam/static/js/main.64dba9c0.js.map",
     "787.fda98803.chunk.js.map": "/aha-frontend-exam/static/js/787.fda98803.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b5daa47e.css",
-    "static/js/main.7164c288.js"
+    "static/js/main.64dba9c0.js"
   ]
 }
