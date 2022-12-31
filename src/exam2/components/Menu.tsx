@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export default function Menu({ direction }: any) {
+  const { pathname } = useLocation()
+
   return (
     <div
       className={`flex flex-${direction} ${
@@ -8,10 +10,10 @@ export default function Menu({ direction }: any) {
       }`}
     >
       <Link to='/exam2'>
-        <Icon color='white' />
+        <Icon color={`${pathname.includes('tag') ? '#8A8A8A' : 'white'}`} />
       </Link>
       <Link to='/exam2/tag'>
-        <Icon color='#8A8A8F' />
+        <Icon color={`${pathname.includes('tag') ? 'white' : '#8A8A8A'}`} />
       </Link>
     </div>
   )
