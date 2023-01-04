@@ -15,7 +15,10 @@ interface Year {
   isSelected: boolean
 }
 
-export default function Calendar({ submit = () => {} }: any) {
+export default function Calendar({
+  submit = () => {},
+  cancel = () => {},
+}: any) {
   const today = dayjs()
 
   const [days, setDays] = useState<Day[][]>([])
@@ -99,7 +102,7 @@ export default function Calendar({ submit = () => {} }: any) {
 
   const Footer = () => (
     <div className='m-6 flex flex-row justify-end items-center text-sm font-semibold cursor-pointer'>
-      <div>Cancel</div>
+      <div onClick={cancel}>Cancel</div>
       <div
         className='ml-16'
         onClick={() => submit(selectedDay.format('MM/DD/YYYY'))}

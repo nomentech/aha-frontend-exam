@@ -22,6 +22,7 @@ export default function Advanced() {
             setBirthday(value)
             setShowCalendar(false)
           }}
+          cancel={() => setShowCalendar(false)}
         />
       )}
     </div>
