@@ -1,6 +1,6 @@
-import Advanced from './Advanced'
-import Calendar from './Calendar'
-import Password from './Password'
+import Advanced from './features/Advanced'
+import Calendar from './features/Calendar'
+import Password from './features/Password'
 
 export default function Home() {
   return (
