@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import getResults from '../api/getResults'
 import Button1 from '../components/Button1'
@@ -20,7 +20,9 @@ export default function Result() {
     }
 
     fetchResults()
-  }, [page])
+  }, [page, pageSize, keyword])
+
+  const handleClick = useCallback(() => setPage((page) => page + 1), [])
 
   return (
     <Layout isHome={false}>
@@ -36,8 +38,8 @@ export default function Result() {
           {!results ? (
             <Loading />
           ) : (
-            results.map((result: any, index: number) => (
-              <div key={index}>
+            results.map((result) => (
+              <div key={result.id}>
                 <img src={result.avater} alt='' />
                 <div className='text-sm mt-5'>{result.name}</div>
                 <div className='text-xs text-[#B2B2B2]'>
@@ -47,7 +49,7 @@ export default function Result() {
             ))
           )}
         </div>
-        <Button1 label='MORE' onClick={() => setPage((page) => page + 1)} />
+        <Button1 label='MORE' onClick={handleClick} />
       </div>
     </Layout>
   )

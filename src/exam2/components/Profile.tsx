@@ -31,17 +31,6 @@ export default function Profile() {
 
   const [activeTab, setActiveTab] = useState('Followers')
 
-  const Tab = ({ title }: any) => (
-    <div
-      className={`w-1/2 text-center pb-1 font-semibold text-[#929292] ${
-        title === activeTab && 'border-b-2 border-b-white text-white'
-      } `}
-      onClick={() => setActiveTab(title)}
-    >
-      {title}
-    </div>
-  )
-
   useEffect(() => {
     const fetchUsers = async () => {
       const u = await getUsers()
@@ -54,24 +43,43 @@ export default function Profile() {
   return (
     <div className='w-[375px] pt-8'>
       <div className='flex flex-row cursor-pointer'>
-        <Tab title='Followers' />
+        <Tab
+          title='Followers'
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
         <Tab title='Following' />
       </div>
-      {!users ? (
-        <Loading />
-      ) : activeTab === 'Followers' ? (
-        <div className='px-4 pt-8'>
-          {users.followers.map((user: any) => (
-            <User user={user} key={user.id} />
-          ))}
-        </div>
-      ) : (
-        <div className='px-4 pt-8'>
-          {users.following.map((user: any) => (
-            <User user={user} key={user.id} />
-          ))}
-        </div>
-      )}
+      {!users ? <Loading /> : <Content activeTab={activeTab} users={users} />}
+    </div>
+  )
+}
+
+function Tab({ title, activeTab, setActiveTab }: any) {
+  return (
+    <div
+      className={`w-1/2 text-center pb-1 font-semibold text-[#929292] ${
+        title === activeTab && 'border-b-2 border-b-white text-white'
+      } `}
+      onClick={() => setActiveTab(title)}
+    >
+      {title}
+    </div>
+  )
+}
+
+function Content({ activeTab, users }: any) {
+  return activeTab === 'Followers' ? (
+    <div className='px-4 pt-8'>
+      {users.followers.map((user: any) => (
+        <User user={user} key={user.id} />
+      ))}
+    </div>
+  ) : (
+    <div className='px-4 pt-8'>
+      {users.following.map((user: any) => (
+        <User user={user} key={user.id} />
+      ))}
     </div>
   )
 }

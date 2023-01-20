@@ -18,7 +18,10 @@ interface Year {
 
 const today = dayjs()
 
-export default function Calendar({ submit, cancel }: any) {
+export default function Calendar({
+  submit = () => {},
+  cancel = () => {},
+}: any) {
   const [days, setDays] = useState<Day[][]>([])
   const [currentMonth, setCurrentMonth] = useState(today)
   const [selectedDay, setSelectedDay] = useState(today)
